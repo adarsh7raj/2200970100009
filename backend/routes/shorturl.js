@@ -1,11 +1,11 @@
-const express = require("express");
-const router = express.Router();
-
-const {
+import express from "express";
+import {
   createShortUrl,
   getStats,
   redirectToUrl
-} = require("../controllers/shorturlController");
+} from "../controller/shorturlController.js"; // use .js extension for ESM
+
+const router = express.Router();
 
 // Route to create a new shortened URL
 router.post("/shorturls", createShortUrl);
@@ -16,4 +16,4 @@ router.get("/shorturls/:shortcode", getStats);
 // Route to redirect to original URL 
 router.get("/:shortcode", redirectToUrl);
 
-module.exports = router;
+export default router;

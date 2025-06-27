@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const shortUrlRoutes = require("./routes/shorturl");
+import express from "express";
+import cors from "cors";
+import shortUrlRoutes from "./routes/shorturl.js"; // Note the `.js` extension in ESM
 
 const app = express();
 
@@ -15,5 +15,5 @@ app.use("/", shortUrlRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`✅ Server is running at: http://localhost:${PORT}`);
+  console.log(` Server is running at: http://localhost:${PORT}`);
 });

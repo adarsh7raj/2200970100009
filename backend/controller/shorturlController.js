@@ -1,24 +1,26 @@
-const { nanoid } = require("nanoid");
-const log = require("logging-middleware"); // custom logging module
-const store = require("../utils/store");
+import { nanoid } from "nanoid";
+import log from "../../logging-middleware/logger.js";
 
-const hostname = "http://localhost:3000"; // replace with actual deployment URL
+import store from "../utils/store.js";
+
+const hostname = "http://localhost:3000"; //
 
 function isValidUrl(url) {
   try {
-    new URL(url);
-    return true;
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
   } catch {
     return false;
   }
 }
+
 
 function isValidShortcode(code) {
   return /^[a-zA-Z0-9]{4,10}$/.test(code);
 }
 
 // Create a new short URL
-const createShortUrl = async (req, res) => {
+export const createShortUrl = async (req, res) => {
   const { url, validity = 30, shortcode } = req.body;
 
   if (!url || !isValidUrl(url)) {
@@ -38,16 +40,14 @@ const createShortUrl = async (req, res) => {
       return res.status(409).json({ error: "Shortcode already in use" });
     }
   } else {
-    // Generate a unique shortcode
     do {
       code = nanoid(6);
     } while (store[code]);
   }
 
   const now = new Date();
-  const expiry = new Date(now.getTime() + validity * 60_000); // convert minutes to ms
+  const expiry = new Date(now.getTime() + validity * 60_000); // minutes to ms
 
-  // Save to in-memory store
   store[code] = {
     url,
     createdAt: now.toISOString(),
@@ -63,8 +63,8 @@ const createShortUrl = async (req, res) => {
   });
 };
 
-// Fetch statistics for a shortcode
-const getStats = async (req, res) => {
+// Fetch statistics
+export const getStats = async (req, res) => {
   const code = req.params.shortcode;
   const entry = store[code];
 
@@ -91,7 +91,7 @@ const getStats = async (req, res) => {
 };
 
 // Redirect to original URL
-const redirectToUrl = async (req, res) => {
+export const redirectToUrl = async (req, res) => {
   const code = req.params.shortcode;
   const entry = store[code];
 
@@ -106,20 +106,13 @@ const redirectToUrl = async (req, res) => {
     return res.status(410).json({ error: "Link has expired" });
   }
 
-  // Log the click
   entry.clicks.push({
     timestamp: now.toISOString(),
     referrer: req.get("Referer") || "direct",
-    location: "IN", // Dummy for now
+    location: "IN",
   });
 
   await log("backend", "info", "controller", `Redirecting to: ${entry.url}`);
 
   return res.redirect(entry.url);
-};
-
-module.exports = {
-  createShortUrl,
-  getStats,
-  redirectToUrl,
 };

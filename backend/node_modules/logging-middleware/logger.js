@@ -1,37 +1,38 @@
-const axios = require("axios");
-require("dotenv").config(); // 
+import axios from "axios";
+import dotenv from "dotenv";
+
+// Load environment variables from .env
+dotenv.config();
 
 const LOGGING_ENDPOINT = "http://20.244.56.144/evaluation-service/logs";
 
-/**
- * Sends a log to the evaluation log server.
- * 
- * @param {string} stack - "backend" or "frontend"
- * @param {string} level - One of: "debug", "info", "warn", "error", "fatal"
- * @param {string} pkg - Package name as specified in requirements
- * @param {string} message - Log message
- */
-async function log(stack, level, pkg, message) {
+// Read token from env
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+
+export default async function log(stack, level, pkg, message) {
   try {
+    if (!ACCESS_TOKEN) {
+      console.error("ACCESS_TOKEN is undefined. Please check your .env file.");  
+      return;
+    }
+
     const res = await axios.post(
       LOGGING_ENDPOINT,
       {
         stack,
         level,
-        package: pkg,
+        package: pkg,                                          
         message,
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-        }
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          "Content-Type": "application/json",
+        },
       }
     );
-   
-    // console.log(res.data);
+    console.log("Log sent:", res.status);
   } catch (err) {
-    console.error("Failed to send log:", err.message);
+    console.error("Failed to send log:", err.response?.status, err.response?.data);
   }
 }
-
-module.exports = log;
