@@ -161,10 +161,10 @@ await log("backend", "info", "controller", "short URL created for custom123");
 ###  Invalid URL (Error)
 
 ![Screenshot 2025-06-27 165135](https://github.com/user-attachments/assets/8176fe31-8c94-47bb-9be1-eb20623b2e0c)
-![Screenshot 2025-06-27 165717](https://github.com/user-atta![Screenshot 2025-06-27 170655](https://github.com/user-attachments/assets/1e1925fc-bb63-4574![Screenshot 2025-06-27 170728](https://github.com/user-attachments/assets/77671e38-f187-4935-8c50-88d09892cf94)
--8ce5-b43bb23d37af)
-chments/assets/f6d5e31b-244e-4adf-bc3e-e025dcb70f84)
 
+![Screenshot 2025-06-27 165717](https://github.com/user-attachments/assets/62737155-8165-42f4-b6e8-f65b40a84eff)
+
+![Screenshot 2025-06-27 170728](https://github.com/user-attachments/assets/6e4e183c-924f-4c1f-b8bd-f3ab815e04ac)
 
 ###  Get Stats
 
