@@ -13,7 +13,7 @@ router.post("/shorturls", createShortUrl);
 // Route to fetch stats for a shortcode
 router.get("/shorturls/:shortcode", getStats);
 
-// Route to redirect to original URL (must be last to prevent route conflicts)
+// Route to redirect to original URL 
 router.get("/:shortcode", redirectToUrl);
 
 module.exports = router;
