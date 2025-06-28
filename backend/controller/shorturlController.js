@@ -7,8 +7,10 @@ const hostname = "http://localhost:3000"; //
 
 function isValidUrl(url) {
   try {
+    console.log("hi");
+    console.log("this is token: "+process.env.ACCESS_TOKEN);
     const parsed = new URL(url);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
+    return parsed.protocol === "http:" || parsed.protocol === "https:"; // this ensures the URL is either HTTP or HTTPS
   } catch {
     return false;
   }
@@ -63,7 +65,8 @@ export const createShortUrl = async (req, res) => {
   });
 };
 
-// Fetch statistics
+// Fetch statistics of a shortcode
+// This endpoint returns the original URL, creation date, expiry date, click count, and click
 export const getStats = async (req, res) => {
   const code = req.params.shortcode;
   const entry = store[code];

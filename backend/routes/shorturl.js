@@ -3,7 +3,7 @@ import {
   createShortUrl,
   getStats,
   redirectToUrl
-} from "../controller/shorturlController.js"; // use .js extension for ESM
+} from "../controller/shorturlController.js"; // 
 
 const router = express.Router();
 
