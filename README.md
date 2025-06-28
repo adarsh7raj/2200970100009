@@ -25,7 +25,7 @@ This project is a **backend microservice** that allows users to shorten URLs, tr
 
 ---
 
-## 🛠️ How to Run It Locally
+##  How to Run It Locally
 
 1. **Clone the Repository**
 
@@ -58,7 +58,7 @@ App will run at: `http://localhost:3000`
 
 ---
 
-## 📌 API Endpoints
+##  API Endpoints
 
 ### 🔹 Create Short URL
 
@@ -177,5 +177,5 @@ await log("backend", "info", "controller", "short URL created for custom123");
 ##  Author
 
 **Adarsh Raj Yadav**
-Roll No: `220097010009`
+Roll No: `2200970100009`
 Email: `adarsh.22gcebcs179@galgotiacollege.edu`
